@@ -23,7 +23,7 @@ void gluLookAt( GLdouble eyeX,
 				GLdouble upY,
 				GLdouble upZ ) {
 
-	Vector cam = {eyeX, eyeY, eyeZ},
+	guVector cam = {eyeX, eyeY, eyeZ},
 			up = {upX, upY, upZ},
 		  look = {centerX, centerY, centerZ};
 

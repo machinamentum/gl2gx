@@ -31,7 +31,7 @@ void glTranslatef( GLfloat x, GLfloat y, GLfloat z ) {
 
 void  glRotatef (GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
 	Mtx temp;
-	Vector axis;
+	guVector axis;
 
 	axis.x = x;
 	axis.y = y;
@@ -253,8 +253,8 @@ void glEnd(void) {
 			//check on w component when 1. light is positional
 			//                     when 0. light is directional at infinite pos
 			
-			Vector lpos;
-			Vector wpos;
+			guVector lpos;
+			guVector wpos;
             lpos.x = gxlightpos[lightcounter].x;
             lpos.y = gxlightpos[lightcounter].y;
             lpos.z = gxlightpos[lightcounter].z;
@@ -274,7 +274,7 @@ void glEnd(void) {
 
 
             //Setup light direction (when w is 1 dan dir = 0,0,0
-            Vector ldir;
+            guVector ldir;
             if (gxlightpos[lightcounter].w==0){ 
                //lpos.x = gxlightpos[lightcounter].x;
 			   //lpos.y = gxlightpos[lightcounter].y;
@@ -315,7 +315,7 @@ void glEnd(void) {
 			if (gxspotcutoff[lightcounter] != 180){
                //Setup specular light (only for spotlight when GL_SPOT_CUTOFF <> 180)
 			   //make this line optional? If on it disturbs diffuse light?
-               Vector sdir;
+               guVector sdir;
                sdir.x = gxspotdirection[lightcounter].x;
                sdir.y = gxspotdirection[lightcounter].y;
                sdir.z = gxspotdirection[lightcounter].z;
@@ -327,7 +327,7 @@ void glEnd(void) {
                               
 			   guVecMultiply(view,&sdir,&sdir);
 			   
-			   Vector light_dir;
+			   guVector light_dir;
 			   guVecSub(&sdir, &lpos, &light_dir);
 			   
 			   GX_TestInitSpecularDir(&gxlight[lightcounter], light_dir.x, light_dir.y, light_dir.z); //needed to enable specular light
@@ -593,7 +593,7 @@ void glLightfv( GLenum light, GLenum pname, const GLfloat *params ){
 		case GL_LIGHT7: lightNum = 7; break;						
 	};
 
-	Vector lightPos={0.0F,0.0F,0.0F}; //TODO: make it opengl default light position
+	guVector lightPos={0.0F,0.0F,0.0F}; //TODO: make it opengl default light position
 	GXColor defcolor={0xFF,0xFF,0xFF,0xFF};
 	switch(pname)
 	{
