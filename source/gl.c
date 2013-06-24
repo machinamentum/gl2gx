@@ -12,12 +12,36 @@
 
 GXColor _clearcolor = {0, 0, 0, 0xff};
 GXRModeObj *rmode;
-
+GLenum glerrorflag = GL_NO_ERROR;
 //textures need to be 4x4 tiles
 
 
+/* Helper function to set glerrorflag appropriately. */
+
+void setError( GLenum error ) {
+
+	//No errors must be recorded until glGetError is called and glerrorflag reset to GL_NO_ERROR.
+	if(glerrorflag == GL_NO_ERROR) {
+		glerrorflag = error;
+	}
+
+}
+
+
+GLenum glGetError( void ) {
+	GLenum error = glerrorflag;
+	glerrorflag = GL_NO_ERROR;
+	return error;
+}
+
 
 void glViewport( GLint x, GLint y, GLsizei width, GLsizei height ) {
+
+	if(width < 0 || height < 0) {
+		setError(GL_INVALID_VALUE);
+		return;
+	}
+
 	//x, y specify the lower-left corner of the viewport in GL, upper-left in GX
 	GX_SetViewport(x, rmode->viHeight - height - y, width, height, 0, 1);
 
