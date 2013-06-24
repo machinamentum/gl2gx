@@ -108,6 +108,16 @@ gxcurrentmaterialshininess = 0.0;
 }
 
 void glutInitDisplayMode(unsigned int mode) {
+
+	//Fix widescreen.
+	if(CONF_GetAspectRatio())
+    {
+        rmode->viWidth = 678;
+
+        //VI_MAX_WIDTH_* is defined as 720 for all configurations.
+        rmode->viXOrigin = (VI_MAX_WIDTH_NTSC - 678) / 2;
+    }
+
 // allocate 2 framebuffers for double buffering
 	frameBuffer[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
 	frameBuffer[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
