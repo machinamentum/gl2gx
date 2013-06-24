@@ -11,8 +11,19 @@
 #include "GL/gl.h"
 
 GXColor _clearcolor = {0, 0, 0, 0xff};
+GXRModeObj *rmode;
 
 //textures need to be 4x4 tiles
+
+
+
+void glViewport( GLint x, GLint y, GLsizei width, GLsizei height ) {
+	//x, y specify the lower-left corner of the viewport in GL, upper-left in GX
+	GX_SetViewport(x, rmode->viHeight - height - y, width, height, 0, 1);
+
+	//GL clips at the viewport bounds, GX clips at the scissor bounds.
+	GX_SetScissor(x, rmode->viHeight - height - y, width, height);
+}
 
 
 /* matrix */
